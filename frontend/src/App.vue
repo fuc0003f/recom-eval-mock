@@ -1,38 +1,49 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
     <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+    <div id="content">
+      <brand-selector @onBrandClick="updateRecommendationDetails($event)"></brand-selector>
+      <recommendation-details :data="recommendationDetailsData"></recommendation-details>
+    </div>
   </div>
 </template>
 
 <script>
+import BrandSelector from "./components/BrandSelector.vue";
+import RecommendationDetails from "./components/RecommendationDetails.vue";
+import axios from "axios";
+
 export default {
-  name: 'app',
-  data () {
+  name: "recom-eval-mock",
+  components: { BrandSelector, RecommendationDetails },
+  data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: "This is a small tool for the evaluation of a recommender system",
+      selected_brand_id: "",
+      recommendationDetailsData: []
+    };
+  },
+  methods: {
+    updateRecommendationDetails: function(brandId) {
+      axios({
+        method: "GET",
+        url: "http://localhost:5000/brands/" + brandId + "/similar"
+      }).then(
+        result => {
+          this.recommendationDetailsData = result.data.similar_brands;
+        },
+        error => {
+          console.error(error);
+        }
+      );
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -40,7 +51,17 @@ export default {
   margin-top: 60px;
 }
 
-h1, h2 {
+#content {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  div {
+    margin: 10px;
+  }
+}
+
+h1,
+h2 {
   font-weight: normal;
 }
 
