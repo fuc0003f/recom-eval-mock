@@ -1,12 +1,13 @@
 <template>
   <div id="brand-selector">
     <div id="search-area">
-      <span class="search-icon">Suche</span>
-      <div id="search-input" contenteditable="true"></div>
+      <img class="search-icon" src="../assets/images/search.png">
+      <input id="search-input" v-model="search_input_value">
     </div>
     <div id="selected-area">
       <img v-if="selected_brand && selected_brand.logo" :src="getImgUrl(selected_brand.logo)">
-      <p>{{selected_brand.name != "" ? selected_brand.name : choose_brand_msg}}</p>
+      <p>{{selected_brand && selected_brand.name != null && selected_brand.name}}</p>
+      <p v-if="selected_brand">{{selected_brand.name == "" ? choose_brand_msg : ""}}</p>
     </div>
     <ul id="brands-list" v-if="this.brand_info">
       <li
@@ -14,7 +15,14 @@
         v-bind:key="item.id"
         @click="handleBrandClickEvent(item.id)"
       >
-        <img v-if="item != null" :src="getImgUrl(item.logo)">
+        <img
+          v-if="item != null && (item.name.includes(search_input_value) || search_input_value === '')"
+          :src="getImgUrl(item.logo)"
+        >
+        <p
+          v-if="item != null && (item.name.includes(search_input_value) || search_input_value === '')"
+          class="brands-list_label"
+        >{{item.name}}</p>
       </li>
     </ul>
   </div>
@@ -36,7 +44,8 @@ export default {
         id: 0,
         logo: "",
         name: ""
-      }
+      },
+      search_input_value: ""
     };
   },
   mounted() {
@@ -54,11 +63,12 @@ export default {
             url: "http://localhost:5000/brandinfo/" + key
           }).then(
             result => {
-              generatedbrand_info.push({
-                id: key,
-                logo: result.data.logo,
-                name: result.data.name
-              });
+              result.data &&
+                generatedbrand_info.push({
+                  id: key,
+                  logo: result.data.logo,
+                  name: result.data.name
+                });
             },
             error => {
               console.error(error);
@@ -84,7 +94,7 @@ export default {
         url: "http://localhost:5000/brandinfo/" + brand_id
       }).then(
         result => {
-          this.selected_brand = {
+          this.selected_brand = result.data && {
             id: brand_id,
             logo: result.data.logo,
             name: result.data.name
@@ -124,7 +134,11 @@ export default {
     break-after: always;
   }
 }
-[contenteditable]:focus {
+.brands-list_label {
+  font-size: 80%;
+  text-align: center;
+}
+input:focus {
   outline: 0px solid transparent;
 }
 #search-area {
@@ -132,6 +146,11 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+.search-icon {
+  width: 30px;
+  height: 30px;
+  padding-right: 5px;
 }
 #search-input {
   border-radius: 25px;

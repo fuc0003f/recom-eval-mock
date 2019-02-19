@@ -3,7 +3,7 @@
     <p>{{ selectedBrands }}</p>
 
     <ul id="recommendation-list" v-if="data != null">
-      <li v-for="item in data" v-bind:key="item">
+      <li v-for="item in data" v-bind:key="item.id">
         <img :src="getImgUrl(item.logo)">
         <div>{{item.name}}</div>
       </li>
