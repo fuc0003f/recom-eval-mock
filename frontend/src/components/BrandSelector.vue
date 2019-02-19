@@ -7,7 +7,10 @@
     <div id="selected-area">
       <img v-if="selected_brand && selected_brand.logo" :src="getImgUrl(selected_brand.logo)">
       <p>{{selected_brand && selected_brand.name != null && selected_brand.name}}</p>
-      <p v-if="selected_brand">{{selected_brand.name == "" ? choose_brand_msg : ""}}</p>
+      <p
+        class="choose-brand-message"
+        v-if="selected_brand"
+      >{{selected_brand.name == "" ? choose_brand_msg : ""}}</p>
     </div>
     <ul id="brands-list" v-if="this.brand_info">
       <li
@@ -137,6 +140,9 @@ export default {
 .brands-list_label {
   font-size: 80%;
   text-align: center;
+}
+.choose-brand-message {
+  margin-top: 50px;
 }
 input:focus {
   outline: 0px solid transparent;
