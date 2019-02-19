@@ -25,12 +25,30 @@ export default {
   },
   methods: {
     updateRecommendationDetails: function(brandId) {
+      let generatedbrand_info = [];
       axios({
         method: "GET",
         url: "http://localhost:5000/brands/" + brandId + "/similar"
       }).then(
         result => {
-          this.recommendationDetailsData = result.data.similar_brands;
+          result.data.similar_brands.forEach(key => {
+            axios({
+              method: "GET",
+              url: "http://localhost:5000/brandinfo/" + key
+            }).then(
+              result => {
+                generatedbrand_info.push({
+                  id: key,
+                  logo: result.data.logo,
+                  name: result.data.name
+                });
+              },
+              error => {
+                console.error(error);
+              }
+            );
+          });
+          this.recommendationDetailsData = generatedbrand_info;
         },
         error => {
           console.error(error);
