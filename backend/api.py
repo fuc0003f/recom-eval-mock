@@ -9,7 +9,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 
 # define some functions 
-def get_similar_brands(brand_id: int) -> List[int]:
+def get_similar_brands(brand_id: int):
     """Run a `complicated` ML model to suggest brands"""
     return mocked_brand_suggestions[str(brand_id)]
 
@@ -57,13 +57,28 @@ def brand_info(brand_id: int):
         return jsonify(get_brand_info(brand_id))
     except KeyError:
         return jsonify(error=404,
-                       message="No info available for brand with id " + brand_id)
+                       message="No info available for brand with id")
+
+@app.route('/saverating/<int:brand_id>/<int:rating>')
+def save_rating(brand_id: int, rating: int):
+    """save the rating for the recommendations of a brand"""
+    try:
+        print("####")
+        print(brand_id)
+        print(rating)
+        print(mocked_brand_suggestions[str(brand_id)]['rating'])
+        mocked_brand_suggestions[str(brand_id)]['rating'] = str(rating)
+        with open('brands.json', 'w') as outfile:
+            json.dump(mocked_brand_suggestions, outfile)
+        return jsonify(mocked_brand_suggestions[str(brand_id)])
+    except KeyError:
+        return jsonify(error=404,
+                       message="No info available for brand with id")
 
 if __name__ == '__main__':
     with open('brands.json') as jf:
         mocked_brand_suggestions = json.load(jf)
     with open('brand-info.json') as jf:
         mocked_brand_infos = json.load(jf)
-
 
     app.run(host='0.0.0.0')

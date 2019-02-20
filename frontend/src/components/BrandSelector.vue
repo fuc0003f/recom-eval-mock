@@ -12,22 +12,24 @@
         v-if="selected_brand"
       >{{selected_brand.name == "" ? choose_brand_msg : ""}}</p>
     </div>
-    <ul id="brands-list" v-if="this.brand_info">
-      <li
-        v-for="item in this.brand_info"
-        v-bind:key="item.id"
-        @click="handleBrandClickEvent(item.id)"
-      >
-        <img
-          v-if="item != null && (item.name.includes(search_input_value) || search_input_value === '')"
-          :src="getImgUrl(item.logo)"
+    <div id="brands-list-wrapper">
+      <ul id="brands-list" v-if="this.brand_info">
+        <li
+          v-for="item in this.brand_info"
+          v-bind:key="item.id"
+          @click="handleBrandClickEvent(item.id)"
         >
-        <p
-          v-if="item != null && (item.name.includes(search_input_value) || search_input_value === '')"
-          class="brands-list_label"
-        >{{item.name}}</p>
-      </li>
-    </ul>
+          <img
+            :class="item == null || (!item.name.includes(search_input_value) && search_input_value !== '') ? 'hidden' : ''"
+            :src="getImgUrl(item.logo)"
+          >
+          <p
+            class="brands-list_label"
+            :class="item == null || (!item.name.includes(search_input_value) && search_input_value !== '') ? 'hidden' : ''"
+          >{{item.name}}</p>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -117,7 +119,7 @@ export default {
 #brand-selector {
   display: flex;
   flex-direction: column;
-  width: 700px;
+  width: 600px;
 }
 #brands-list {
   text-align: left;

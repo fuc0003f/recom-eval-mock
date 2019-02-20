@@ -3,7 +3,11 @@
     <h1>{{ msg }}</h1>
     <div id="content">
       <brand-selector @onBrandClick="updateRecommendationDetails($event)"></brand-selector>
-      <recommendation-details :data="recommendationDetailsData"></recommendation-details>
+      <recommendation-details
+        :data="recommendation_details_data"
+        :actual_rating="actual_rating"
+        @setRating="saveRating($event)"
+      ></recommendation-details>
     </div>
   </div>
 </template>
@@ -19,18 +23,21 @@ export default {
   data() {
     return {
       msg: "This is a small tool for the evaluation of a recommender system",
-      selected_brand_id: "",
-      recommendationDetailsData: []
+      recommendation_details_data: [],
+      selected_brand: 0,
+      actual_rating: 0
     };
   },
   methods: {
     updateRecommendationDetails: function(brandId) {
       let generatedbrand_info = [];
+      this.selected_brand = brandId;
       axios({
         method: "GET",
         url: "http://localhost:5000/brands/" + brandId + "/similar"
       }).then(
         result => {
+          this.actual_rating = parseInt(result.data.rating);
           result.data.similar_brands.forEach(key => {
             axios({
               method: "GET",
@@ -48,7 +55,30 @@ export default {
               }
             );
           });
-          this.recommendationDetailsData = generatedbrand_info;
+          this.recommendation_details_data = generatedbrand_info;
+        },
+        error => {
+          console.error(error);
+        }
+      );
+    },
+    saveRating: function(rating) {
+      this.actual_rating = parseInt(rating);
+      axios({
+        method: "GET",
+        url:
+          "http://localhost:5000/saverating/" +
+          this.selected_brand +
+          "/" +
+          this.actual_rating
+      }).then(
+        result => {
+          console.log(
+            "rating for brand: " +
+              this.selected_brand +
+              " updated to " +
+              this.actual_rating
+          );
         },
         error => {
           console.error(error);
@@ -60,13 +90,19 @@ export default {
 </script>
 
 <style lang="scss">
+$primary-color: #000;
+$white: #fff;
+
+body {
+  margin: 0;
+}
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: $primary-color;
+  margin-top: 0;
 }
 
 #content {
@@ -81,6 +117,17 @@ export default {
 h1,
 h2 {
   font-weight: normal;
+  background-color: $primary-color;
+  color: $white;
+  margin: 0px;
+}
+h1 {
+  padding-top: 60px;
+  padding-bottom: 30px;
+}
+
+.hidden {
+  display: none;
 }
 
 ul {
