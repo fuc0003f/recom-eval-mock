@@ -4,11 +4,11 @@ This is a mockup for an evaluation solution of a recommender system.
 
 # Run the mockup
 
-- Required:
-  Docker
-  MacOS/Linux
+## Required:
+- Docker
+- MacOS/Linux
 
-1. In Terminal direct into the root directory and execute:
+1. In Terminal direct into the root directory and execute (make sure that docker is running):
 
 ```
 $ docker-compose up
