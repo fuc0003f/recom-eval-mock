@@ -14,7 +14,15 @@ This is a mockup for an evaluation solution of a recommender system.
 $ docker-compose up
 ```
 
-2. Wait until everything is set up.
+2. Wait until everything is set up. Wait for something like that:
+
+```
+backend_1   |  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+frontend_1  | Starting up http-server, serving ./
+frontend_1  | Available on:
+frontend_1  |   http://127.0.0.1:8080
+frontend_1  |   http://172.20.0.3:8080
+```
 
 3. Open Browser on http://localhost:8080
 
