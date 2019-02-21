@@ -33,3 +33,8 @@ frontend_1  |   http://172.20.0.3:8080
 ```
 $ docker-compose down
 ```
+
+# Comments
+
+- For the pure evaluation issue it would be better to show the user one recommendation after the other instead of clicking through the brands.
+- As a feature it would be nice if the user could change the order of the recommendations or delete brands from the recommended list if they dont have any similarity with the selected brand. If the user could give recommendations for better results in this way, this could help to improve the algorithm.
