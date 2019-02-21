@@ -6,7 +6,7 @@ This is a mockup for an evaluation solution of a recommender system.
 
 ### Required:
 - Docker
-- MacOS/Linux
+- MacOS/Linux (probably won't work on Windows)
 
 1. Open terminal in the root directory of this project and execute (make sure that docker is running):
 
@@ -24,7 +24,7 @@ frontend_1  |   http://127.0.0.1:8080
 frontend_1  |   http://172.20.0.3:8080
 ```
 
-3. Open Browser on http://localhost:8080
+3. Open Browser (Chrome/Firefox) on http://localhost:8080
 
 ## Shut down the mockup
 
