@@ -2,9 +2,9 @@
 
 This is a mockup for an evaluation solution of a recommender system.
 
-# Run the mockup
+## Run the mockup
 
-## Required:
+### Required:
 - Docker
 - MacOS/Linux
 
@@ -26,7 +26,7 @@ frontend_1  |   http://172.20.0.3:8080
 
 3. Open Browser on http://localhost:8080
 
-# Shut down the mockup
+## Shut down the mockup
 
 1. Press CTRL+C in Terminal and then type in the following command:
 
@@ -34,7 +34,7 @@ frontend_1  |   http://172.20.0.3:8080
 $ docker-compose down
 ```
 
-# Comments
+## Comments
 
 - For the pure evaluation issue it would be better to show the user one recommendation after the other instead of clicking through the brands.
 - As a feature it would be nice if the user could change the order of the recommendations or delete brands from the recommended list if they dont have any similarity with the selected brand. If the user could give recommendations for better results in this way, this could help to improve the algorithm.
