@@ -34,10 +34,11 @@ export default {
     return {
       selected_brands: "RECOMMENDED BRANDS",
       recommendation_info:
-        "Above you see a list of brands that was created by a fancy recommendation system. You can click through the brands on the left and give a rating for quality of the recommendations."
+        "Above you see a list of brands that was created by a fancy recommendation system. You can click through the brands on the left and give a rating for the quality of the recommendations."
     };
   },
   methods: {
+    // set a rating for the recommendation
     setRating: function(rating) {
       this.$emit("setRating", rating);
     },
@@ -51,8 +52,17 @@ export default {
   display: none;
 }
 .vue-star-rating {
+  border-top: 1px solid #000;
+  margin-left: 100px !important;
+  margin-right: 100px !important;
   justify-content: center;
+  padding-top: 5px;
 }
+
+.vue-star-rating * {
+  border-top: 0px;
+}
+
 #recommendation-details {
   width: 500px !important;
   justify-content: center;
@@ -63,9 +73,15 @@ export default {
   font-weight: 700;
   line-height: 16px;
   letter-spacing: 1.1px;
+  border-bottom: 1px solid #000;
+  padding-bottom: 15px;
+  margin-left: 100px;
+  margin-right: 100px;
 }
 
 #recommendation-list {
+  padding-left: 20%;
+  padding-right: 20px;
   display: flex;
   flex-direction: column;
   height: 400px;
@@ -86,6 +102,6 @@ export default {
   display: flex;
   justify-content: left;
   position: relative;
-  margin-left: 20%;
+  margin-bottom: 10px;
 }
 </style>

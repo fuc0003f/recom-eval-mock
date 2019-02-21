@@ -17,16 +17,11 @@
         <li
           v-for="item in this.brand_info"
           v-bind:key="item.id"
+          :class="item == null || (!item.name.includes(search_input_value) && search_input_value !== '') ? 'hidden' : ''"
           @click="handleBrandClickEvent(item.id)"
         >
-          <img
-            :class="item == null || (!item.name.includes(search_input_value) && search_input_value !== '') ? 'hidden' : ''"
-            :src="getImgUrl(item.logo)"
-          >
-          <p
-            class="brands-list_label"
-            :class="item == null || (!item.name.includes(search_input_value) && search_input_value !== '') ? 'hidden' : ''"
-          >{{item.name}}</p>
+          <img :src="getImgUrl(item.logo)">
+          <p class="brands-list_label">{{item.name}}</p>
         </li>
       </ul>
     </div>
@@ -41,8 +36,7 @@ export default {
   name: "brand-selector",
   data() {
     return {
-      choose_brand_msg:
-        "Please choose a brand from below to get recommendations.",
+      choose_brand_msg: "Choose a brand from below to get recommendations.",
       brands: [],
       brand_info: [],
       selected_brand: {
@@ -88,6 +82,7 @@ export default {
     );
   },
   methods: {
+    // handle click on a brand item
     handleBrandClickEvent: function(brand_id) {
       this.selected_brand = this.getbrand_info(brand_id);
       this.$emit("onBrandClick", brand_id);
@@ -119,14 +114,14 @@ export default {
 #brand-selector {
   display: flex;
   flex-direction: column;
-  width: 600px;
+  width: 500px;
 }
 #brands-list {
   text-align: left;
   display: inline;
   img {
-    width: 180px;
-    height: 150px;
+    width: 120px;
+    height: 100px;
     margin: -20px;
     opacity: 0.7;
   }
@@ -177,6 +172,8 @@ input:focus {
     width: 300px;
     height: 250px;
   }
+  border: 1px solid #f5f5f5;
+  padding-top: 10%;
 }
 h1,
 h2 {

@@ -22,13 +22,14 @@ export default {
   components: { BrandSelector, RecommendationDetails },
   data() {
     return {
-      msg: "This is a small tool for the evaluation of a recommender system",
+      msg: "recommender evaluation mockup",
       recommendation_details_data: [],
       selected_brand: 0,
       actual_rating: 0
     };
   },
   methods: {
+    // update the recommendation view because another brand was clicked
     updateRecommendationDetails: function(brandId) {
       let generatedbrand_info = [];
       this.selected_brand = brandId;
@@ -62,6 +63,7 @@ export default {
         }
       );
     },
+    // save the rating for one recommendation
     saveRating: function(rating) {
       this.actual_rating = parseInt(rating);
       axios({
@@ -120,6 +122,7 @@ h2 {
   background-color: $primary-color;
   color: $white;
   margin: 0px;
+  font-weight: 100;
 }
 h1 {
   padding-top: 60px;
