@@ -5,7 +5,7 @@ This is a mockup for an evaluation solution of a recommender system.
 ## Run the mockup
 
 ### Required:
-- Docker
+- Docker plus docker-compose (usually included in docker desktop for mac)
 - MacOS/Linux (probably won't work on Windows)
 
 1. Open terminal in the root directory of this project and execute (make sure that docker is running):
