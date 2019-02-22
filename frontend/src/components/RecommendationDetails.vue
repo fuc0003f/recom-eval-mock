@@ -9,7 +9,7 @@
       </li>
     </ul>
     <star-rating
-      v-model="this.actual_rating"
+      v-model="actual_rating"
       :star-size="25"
       :padding="5"
       :text-class="'rating-text'"
